@@ -1,9 +1,14 @@
 import React from 'react'
+import './Digit.css'
 
-const Digit = (porp) => {
+const Digit = (props) => {
 
     return(
-        <h1>This is digit component</h1>
+        <div className="digit mx-3 text-center" style={{borderColor: props.color}}>
+            <h1 className="display-2 py-3" style={{color:props.color}}>
+                {props.value < 10 ? `0${props.value}` : props.value }
+                </h1>
+        </div>
     )
 }
 
