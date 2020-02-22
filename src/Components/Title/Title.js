@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import './Title.css'
 
 class Title  extends Component{
 
@@ -6,22 +7,73 @@ class Title  extends Component{
         super(props)
 
         this.state ={
-            number: 0,
+            title: 'Your CountDown App',
+            isInput: false,
         }
     }
 
-    counter(){
+    //create edit handeler method 
+    editHandler(){
         this.setState({
-            number: this.state.number+1
+            ...this.state,
+            isInput:true
         })
-        console.log(this.state.number)
+    }
+    //create method for inputChange 
+    inputChange(event){
+        this.setState({
+            ...this.state,
+            title:event.target.value
+            
+        })
+    }
+    //keyPressHanlder method for change keyprase
+    keyPressHanler(event){
+        if(event.key === 'Enter'){
+            this.setState({
+                ...this.state,
+                isInput:false
+            })
+        }
+    }
+    blurHandler(event){
+        this.setState({
+            ...this.state,
+            isInput:false
+        })
     }
 
+
     render(){
+        let output = null
+        if(this.state.isInput){
+            output = (
+                <div className="edit-field">
+                    <input 
+                    className="form-control" 
+                    onChange ={ (event) => this.inputChange(event) }
+                    onKeyPress ={ event => this.keyPressHanler(event) }
+                    onBlur ={ event => this.blurHandler(event) }
+                    type="text" 
+                    value={this.state.title} />
+                </div>
+            )
+
+        }else{
+            output = (
+            <div className="d-flex title">
+                <h2 className="display-4">{this.state.title}</h2>
+                <span onClick= { () => this.editHandler() } className=" edit-icon ml-auto">
+                <i className="fas fa-pencil-alt"></i>
+                </span>
+            </div>
+            )
+        }
         return(
             <div>
-                <h2>Hi, this is {this.props.name} & My Email ( {this.props.email} )</h2>
-                <button onClick= { () => this.counter() }>Click Me { this.state.number }</button>
+                {
+                    output
+                }
                 
             </div>
             
